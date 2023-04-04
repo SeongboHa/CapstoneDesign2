@@ -10,7 +10,7 @@
 
 # 🐕 개요
 
-<img src="photo/untitled.png" width="500" height="300"/>
+<img src="photo/Untitled.png" width="500" height="300"/>
 
 ### 독거노인 등 외로운 사람들을 위한 다목적 로봇 애완견
 
