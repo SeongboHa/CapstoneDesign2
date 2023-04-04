@@ -93,6 +93,16 @@ Python
 # 📊 진행상황
 
 
+# How to install
+```sh
+mkdir ~/pupper/src && cd ~/pupper/src
+git clone https://github.com/UAENA0516/CapstoneDesign2.git
+cd ..
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+colcon build --symlink-install
+'''
+
 
 [진행상황](https://www.notion.so/f06969a9ec7e478e9c5b1ee7523a9e6d)
 
