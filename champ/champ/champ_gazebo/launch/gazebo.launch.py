@@ -10,7 +10,7 @@ from launch.actions import (DeclareLaunchArgument, ExecuteProcess,
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PythonExpression
-
+import launch
 
 def generate_launch_description():
 
@@ -164,9 +164,11 @@ def generate_launch_description():
             start_gazebo_server_cmd,
             start_gazebo_client_cmd,
             start_gazebo_spawner_cmd,
-            load_joint_state_controller,
-            # load_joint_trajectory_position_controller
-            load_joint_trajectory_effort_controller,
-            contact_sensor
+            launch.actions.TimerAction(period=5.0, actions=[load_joint_state_controller,
+                                                             load_joint_trajectory_effort_controller,
+                                                             contact_sensor]),
+            # load_joint_state_controller,
+            # load_joint_trajectory_effort_controller,
+            # contact_sensor
         ]
     )

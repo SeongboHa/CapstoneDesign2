@@ -144,7 +144,6 @@ void QuadrupedController::ActionCallback_(const std_msgs::msg::String::SharedPtr
 
 void QuadrupedController::DoAction(const string action)
 {
-
     if(action == "앉아") //0
     {
         for(int i=0; i<12; i++)

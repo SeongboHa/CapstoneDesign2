@@ -25,6 +25,7 @@
 # https://github.com/chvmp/champ/blob/f76d066d8964c8286afbcd9d5d2c08d781e85f54/champ_gazebo/launch/gazebo.launch.py
 
 import os
+import launch
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
@@ -48,15 +49,16 @@ def generate_launch_description():
     description_path = os.path.join(
         description_package, 'urdf', 'mini_pupper_description.urdf.xacro')
     default_world_path = os.path.join(
-        # 가제보 환경 파일
-        gazebo_package, 'worlds', 'default.world')
-    
+        gazebo_package, 'worlds', 'playground.world')
+    custom_world_path = os.path.join(
+        gazebo_package, 'worlds', 'house.world')
+
     bringup_launch_path = os.path.join(
         bringup_package, 'launch', 'bringup.launch.py')
 
     robot_name = LaunchConfiguration("robot_name")
     sim = LaunchConfiguration("sim")
-    hardware_connected = LaunchConfiguration("hardware_connected")
+    joint_hardware_connected = LaunchConfiguration("joint_hardware_connected")
     rviz = LaunchConfiguration("rviz")
     lite = LaunchConfiguration("lite")
     world = LaunchConfiguration("world"),
@@ -87,7 +89,7 @@ def generate_launch_description():
     )
     declare_world = DeclareLaunchArgument(
         name="world",
-        default_value=default_world_path,
+        default_value=custom_world_path,
         description="Gazebo world path"
     )
     declare_gui = DeclareLaunchArgument(
@@ -112,8 +114,8 @@ def generate_launch_description():
         default_value='true',
         description='Enable use_sime_time to true'
     )
-    declare_hardware_connected = DeclareLaunchArgument(
-        name='hardware_connected',
+    declare_joint_hardware_connected = DeclareLaunchArgument(
+        name='joint_hardware_connected',
         default_value='false',
         description='Set to true if connected to a physical robot'
     )
@@ -125,7 +127,7 @@ def generate_launch_description():
             "robot_name": robot_name,
             "gazebo": sim,
             "rviz": rviz,
-            "hardware_connected": hardware_connected,
+            "joint_hardware_connected": joint_hardware_connected,
             "publish_foot_contacts": "true",
             "close_loop_odom": "true",
             "joint_controller_topic": "joint_group_effort_controller/joint_trajectory",
@@ -151,7 +153,7 @@ def generate_launch_description():
             "close_loop_odom": "true",
         }.items(),
     )
-
+    
     return LaunchDescription([
         declare_rviz,
         declare_robot_name,
@@ -162,8 +164,10 @@ def generate_launch_description():
         declare_world_init_x,
         declare_world_init_y,
         declare_world_init_heading,
+        
+        # launch.actions.TimerAction(period=30.0, actions=[champ_gazebo_launch]),
         declare_sim,
-        declare_hardware_connected,
+        declare_joint_hardware_connected,
         mini_pupper_bringup_launch,
         champ_gazebo_launch
     ])

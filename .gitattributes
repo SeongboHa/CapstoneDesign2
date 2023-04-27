@@ -1,0 +1,2 @@
+. filter=lfs diff=lfs merge=lfs -text
+mini_pupper_ros/mini_pupper_gazebo/worlds/model.dae filter=lfs diff=lfs merge=lfs -text

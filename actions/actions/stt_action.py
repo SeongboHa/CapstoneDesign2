@@ -18,8 +18,6 @@ class Send_action(Node):
             desc = audio.get_device_info_by_index(index)
             print("DEVICE: {device}, INDEX: {index}, RATE: {rate} ".format(
                 device=desc["name"], index=index, rate=int(desc["defaultSampleRate"])))
-
-        
               
         th = threading.Thread(target=self.key_input)
         th.start()
@@ -27,7 +25,7 @@ class Send_action(Node):
     def key_input(self):
         r = sr.Recognizer()
         while True:
-            with sr.Microphone() as source:
+            with sr.Microphone(5) as source:
                 print('동작중')
                 audio = r.listen(source)
             try:
